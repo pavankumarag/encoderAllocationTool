@@ -1,0 +1,205 @@
+body#mainPage {
+	background-image:url(images/bg_encoder2.jpg);
+   background-repeat:no-repeat;
+   background-size:cover;
+   background-attachment: fixed;
+	background-position: 50% 50%;
+}
+
+
+
+a {
+	color:#0000FF;
+	text-decoration: none;
+	
+}
+
+a:hover {
+	border-bottom:2px solid;
+	color:yellowgreen;
+	
+}
+
+a .header {
+	/*background-color: #000000;	*/
+	/*color: blueviolet;	*/
+	color: maroon;
+	font-weight: bold;
+/*	border-bottom:1px solid;	*/
+}
+
+a:hover .header {
+	/*background-color: #000000;	*/
+	color: yellowgreen;	
+	font-weight: bold;
+	border-bottom:1px solid;	
+}
+
+a .tableHeader {
+	background-color: #000000;	
+	color: white;	
+	font-weight: bold;
+	border-bottom:1px solid;	
+}
+
+
+a:hover .tableHeader {
+	background-color: #000000;	
+	color: red;	
+	font-weight: bold;
+	border-bottom:1px solid;	
+}
+
+.trOdd {
+	background-color: #BFFFCF;	
+}
+
+.trEven {
+	background-color: #FCCDFF;	
+}
+
+.textNormal {
+	font-family: arial, helvetica, sans-serif;
+	color: black;	
+}
+
+.textEmph {
+	color: maroon;	
+}
+.tableHeader {
+	background-color: #000000;	
+	color: lightblue;	
+		
+}
+
+h1 {
+	margin: 0px;
+	padding: 10px 0;
+	font-size: 36px;
+	/*color: #d77707;*/
+	color: blanchedalmond; 
+	font-weight:bolder;
+	font-style: normal;
+}
+
+h2 {
+	margin: 0 0 15px 0;
+	padding: 0 0 10px 0;
+	font-size: 30px;
+	color: #ff9d11;
+	font-weight:bolder;
+	/*border-bottom: 1px dotted #663e17;*/
+}
+
+h3 {
+	margin: 0 0 15px 0;
+	padding: 0 0 10px 0;
+	font-size: 20px;
+	color: #ffc64a;
+	border-bottom: 1px dotted #663e17;
+}
+
+div#header {
+	width: 100%;
+	background-color: lightgreen;
+	border-bottom: 1px solid black ;
+	height: 6%;
+}
+
+div#content {
+	width: 100%;
+	background-color: lightyellow;
+	border-bottom: 1px solid black ;
+	height: 88%;
+}
+
+div#footer {
+	width: 100%;
+	background-color:lightgreen;
+	border-top: 1px solid black ;
+	height: 6%;
+	/*margin-top: 100px;*/
+
+}
+
+div#content_left {
+	display: table;
+	vertical-align: top;
+	/*float: left;*/
+	width: 700px;
+	margin-bottom: 15px;
+}
+
+div#content_right {
+	display: table-cell;
+	vertical-align: top;
+	/*float: right;*/
+	width: 300px;
+	margin-bottom: 15px;
+	
+}
+
+
+p#footerp {
+	color:blue;
+	text-align:center;
+}
+
+#headerh {
+	text-align: center;
+	font-size: 20px;
+	font: bolder;
+}
+
+/*
+//from company example
+#header {
+ 	text-align: center;
+ 	font-size: 18pt;	
+}    
+
+#outerWrapper {
+    border-spacing: 10px;
+    display: table;
+    
+}
+
+#innerWrapper {
+    border-spacing: 10px;
+    display: table;
+}
+
+#menuColumn{
+    display: table-cell;
+    border: 1px solid #094700;
+    padding: 10px;
+    vertical-align: top;
+    background-color: #DDFFBB;
+    min-width: 140px;
+}
+    
+#contentColumn {
+    display: table-cell;
+    border: 1px solid #094700;
+    padding: 10px;
+	 vertical-align: top;
+	 background-color: #FCFFCD;
+	 min-width: 700px;
+}
+
+#footer {
+ 	text-align: center;	
+}    
+
+p#footerp {
+	color:blue;
+	text-align:center;
+}
+
+p#headerh {
+	text-align: center;
+	font-size: 20px;
+	font: bolder;
+	color:blue;
+}
+*/

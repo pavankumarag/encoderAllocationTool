@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.2.9
+- http://www.phpmyadmin.net
+-
+- Host: localhost
+- Generation Time: Oct 23, 2014 at 10:05 AM
+- Server version: 5.6.21
+- PHP Version: 5.5.14
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="http://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="encoderDb" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="eAccessControl">
+                CREATE TABLE `eAccessControl` (
+                  `accessLevel` int(11) NOT NULL,
+                  `ID` int(11) NOT NULL AUTO_INCREMENT,
+                  `userType` varchar(50) NOT NULL,
+                  PRIMARY KEY (`ID`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="eAccessLog">
+                CREATE TABLE `eAccessLog` (
+                  `ID` int(11) NOT NULL AUTO_INCREMENT,
+                  `userID` int(11) NOT NULL,
+                  `timeLogin` datetime DEFAULT NULL,
+                  `timeLogout` datetime DEFAULT NULL,
+                  `IPaddress` varchar(25) DEFAULT NULL,
+                  `userName` varchar(60) NOT NULL,
+                  PRIMARY KEY (`ID`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="eEncoder">
+                CREATE TABLE `eEncoder` (
+                  `ID` int(11) NOT NULL AUTO_INCREMENT,
+                  `encoderIP` bigint(11) NOT NULL,
+                  `encoderInfo` varchar(1000) NOT NULL,
+                  PRIMARY KEY (`ID`),
+                  UNIQUE KEY `encoderIP` (`encoderIP`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="eEncoderAllocation">
+                CREATE TABLE `eEncoderAllocation` (
+                  `ID` int(11) NOT NULL AUTO_INCREMENT,
+                  `encoderID` int(11) NOT NULL,
+                  `user` varchar(250) NOT NULL,
+                  `email` varchar(100) NOT NULL,
+                  `startDate` bigint(20) NOT NULL,
+                  `endDate` bigint(20) NOT NULL,
+                  PRIMARY KEY (`ID`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="eUser">
+                CREATE TABLE `eUser` (
+                  `ID` int(11) NOT NULL AUTO_INCREMENT,
+                  `username` varchar(16) NOT NULL,
+                  `password` varchar(70) NOT NULL,
+                  `email` varchar(30) NOT NULL,
+                  `accessLevel` int(11) NOT NULL,
+                  PRIMARY KEY (`ID`),
+                  UNIQUE KEY `username` (`username`,`email`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'encoderDb'
+    -->
+    <database name="encoderDb">
+        <!-- Table eAccessControl -->
+        <table name="eAccessControl">
+            <column name="accessLevel">99</column>
+            <column name="ID">1</column>
+            <column name="userType">Administrator</column>
+        </table>
+        <table name="eAccessControl">
+            <column name="accessLevel">21</column>
+            <column name="ID">2</column>
+            <column name="userType">User</column>
+        </table>
+        <table name="eAccessControl">
+            <column name="accessLevel">11</column>
+            <column name="ID">3</column>
+            <column name="userType">Viewer</column>
+        </table>
+        <!-- Table eAccessLog -->
+        <table name="eAccessLog">
+            <column name="ID">75</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 13:17:36</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">76</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 13:17:55</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">77</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 13:19:20</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">78</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 13:22:09</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">79</column>
+            <column name="userID">5</column>
+            <column name="timeLogin">2014-10-18 13:24:15</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">pavan</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">80</column>
+            <column name="userID">5</column>
+            <column name="timeLogin">2014-10-18 13:25:01</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">pavan</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">81</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 13:25:34</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">82</column>
+            <column name="userID">5</column>
+            <column name="timeLogin">2014-10-18 13:26:19</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">pavan</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">83</column>
+            <column name="userID">5</column>
+            <column name="timeLogin">2014-10-18 13:26:52</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">pavan</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">84</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 13:27:01</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">85</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 13:40:15</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">86</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 14:31:08</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">87</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 15:38:56</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">88</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 16:25:18</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">89</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 16:31:19</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">90</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 16:37:36</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">91</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 16:39:01</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">92</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 16:39:24</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">93</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 16:49:26</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">94</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 16:51:43</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">95</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-18 17:33:04</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">96</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-19 13:42:45</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">97</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-19 13:42:50</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">98</column>
+            <column name="userID">2</column>
+            <column name="timeLogin">2014-10-19 13:43:00</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">user</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">99</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-19 14:31:26</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">100</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-19 17:08:46</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">101</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-20 03:28:42</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">102</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-20 04:06:28</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">103</column>
+            <column name="userID">7</column>
+            <column name="timeLogin">2014-10-20 04:07:38</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">saibal</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">104</column>
+            <column name="userID">5</column>
+            <column name="timeLogin">2014-10-20 04:45:49</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">pavan</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">105</column>
+            <column name="userID">11</column>
+            <column name="timeLogin">2014-10-20 04:48:26</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">marshi</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">106</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-20 04:49:15</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">107</column>
+            <column name="userID">5</column>
+            <column name="timeLogin">2014-10-20 04:52:13</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">pavan</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">108</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-20 05:40:04</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">109</column>
+            <column name="userID">2</column>
+            <column name="timeLogin">2014-10-20 05:41:41</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">user</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">110</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-20 05:42:26</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">111</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-20 12:00:07</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">112</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-20 12:03:31</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">113</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-20 17:48:32</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">114</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 07:02:57</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">115</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 07:03:03</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">116</column>
+            <column name="userID">2</column>
+            <column name="timeLogin">2014-10-21 07:04:00</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">user</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">117</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 07:05:28</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">118</column>
+            <column name="userID">12</column>
+            <column name="timeLogin">2014-10-21 07:05:55</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">navya</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">119</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 07:14:21</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">120</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 09:23:04</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">121</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:00:31</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">122</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:06:41</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">123</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:08:57</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">124</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:12:07</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">125</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:18:33</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">126</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:21:14</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">127</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:22:31</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">128</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:33:17</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">129</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:51:31</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">130</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 14:55:33</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">131</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 15:44:51</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">132</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-21 17:00:52</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">133</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 14:08:07</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">134</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 14:56:02</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">135</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 14:58:44</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">136</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 15:30:30</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">137</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 15:30:55</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">138</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 15:31:09</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">139</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 15:31:49</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">140</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 15:51:52</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">141</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 16:22:18</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">142</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-22 18:16:35</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">143</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-23 03:27:59</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">144</column>
+            <column name="userID">11</column>
+            <column name="timeLogin">2014-10-23 03:37:44</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">marshi</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">145</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-23 09:19:15</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <table name="eAccessLog">
+            <column name="ID">146</column>
+            <column name="userID">1</column>
+            <column name="timeLogin">2014-10-23 09:52:33</column>
+            <column name="timeLogout">NULL</column>
+            <column name="IPaddress">::1</column>
+            <column name="userName">admin</column>
+        </table>
+        <!-- Table eEncoder -->
+        <table name="eEncoder">
+            <column name="ID">1</column>
+            <column name="encoderIP">3323081730</column>
+            <column name="encoderInfo">Flash encoder and will used for IIS network also.</column>
+        </table>
+        <table name="eEncoder">
+            <column name="ID">3</column>
+            <column name="encoderIP">3323079959</column>
+            <column name="encoderInfo">Flash encoder</column>
+        </table>
+        <table name="eEncoder">
+            <column name="ID">5</column>
+            <column name="encoderIP">3323079957</column>
+            <column name="encoderInfo">Flash encoder</column>
+        </table>
+        <table name="eEncoder">
+            <column name="ID">7</column>
+            <column name="encoderIP">3323080910</column>
+            <column name="encoderInfo">This encoder is used for icecast network.</column>
+        </table>
+        <table name="eEncoder">
+            <column name="ID">8</column>
+            <column name="encoderIP">3324122881</column>
+            <column name="encoderInfo">Ingest encoder</column>
+        </table>
+        <!-- Table eEncoderAllocation -->
+        <table name="eEncoderAllocation">
+            <column name="ID">1</column>
+            <column name="encoderID">1</column>
+            <column name="user">pavan</column>
+            <column name="email">pgovindr@akamai.com</column>
+            <column name="startDate">1413639203</column>
+            <column name="endDate">1414157603</column>
+        </table>
+        <table name="eEncoderAllocation">
+            <column name="ID">2</column>
+            <column name="encoderID">3</column>
+            <column name="user">pranathi</column>
+            <column name="email">prnathi@akamai.com</column>
+            <column name="startDate">1413639203</column>
+            <column name="endDate">1414157603</column>
+        </table>
+        <table name="eEncoderAllocation">
+            <column name="ID">3</column>
+            <column name="encoderID">5</column>
+            <column name="user">vinay</column>
+            <column name="email">vsath@akamai.com</column>
+            <column name="startDate">1413639203</column>
+            <column name="endDate">1414157603</column>
+        </table>
+        <table name="eEncoderAllocation">
+            <column name="ID">4</column>
+            <column name="encoderID">7</column>
+            <column name="user">saibal</column>
+            <column name="email">saibal@akamai.com</column>
+            <column name="startDate">1413639203</column>
+            <column name="endDate">1414157603</column>
+        </table>
+        <table name="eEncoderAllocation">
+            <column name="ID">5</column>
+            <column name="encoderID">1</column>
+            <column name="user">pavan</column>
+            <column name="email">pgovjn@akamai.com</column>
+            <column name="startDate">1414244003</column>
+            <column name="endDate">1414503203</column>
+        </table>
+        <table name="eEncoderAllocation">
+            <column name="ID">6</column>
+            <column name="encoderID">1</column>
+            <column name="user">siabal</column>
+            <column name="email">saiba@akamai.com</column>
+            <column name="startDate">1413731664</column>
+            <column name="endDate">1413733664</column>
+        </table>
+        <!-- Table eUser -->
+        <table name="eUser">
+            <column name="ID">1</column>
+            <column name="username">admin</column>
+            <column name="password">1844156d4166d94387f1a4ad031ca5fa</column>
+            <column name="email"></column>
+            <column name="accessLevel">99</column>
+        </table>
+        <table name="eUser">
+            <column name="ID">2</column>
+            <column name="username">user</column>
+            <column name="password">6ad14ba9986e3615423dfca256d04e3f</column>
+            <column name="email"></column>
+            <column name="accessLevel">11</column>
+        </table>
+        <table name="eUser">
+            <column name="ID">5</column>
+            <column name="username">pavan</column>
+            <column name="password">62cee51e57683afb139a784189c8cfc7</column>
+            <column name="email">pgovindr@akamai.com</column>
+            <column name="accessLevel">99</column>
+        </table>
+        <table name="eUser">
+            <column name="ID">11</column>
+            <column name="username">marshi</column>
+            <column name="password">53ee7c368102bd378a3d1b33e421dc35</column>
+            <column name="email">magg@akamai.com</column>
+            <column name="accessLevel">11</column>
+        </table>
+        <table name="eUser">
+            <column name="ID">12</column>
+            <column name="username">navya</column>
+            <column name="password">27e1b4ba0a4d02ac247463a31ce38115</column>
+            <column name="email">hdhdu@ahja</column>
+            <column name="accessLevel">21</column>
+        </table>
+    </database>
+</pma_xml_export>

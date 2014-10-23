@@ -1,0 +1,185 @@
+<?php
+
+
+	{ 		
+			include('./config/dbConfig.php'); 
+			$dbSuccess = false;
+			$dbConnected = mysql_connect($db['hostname'],$db['username'],$db['password']);
+			
+			if ($dbConnected) {		
+				$dbSelected = mysql_select_db($db['database'],$dbConnected);
+				if ($dbSelected) {
+					$dbSuccess = true;
+				} 	
+			}
+	}
+date_default_timezone_set('GMT');
+	if ($dbSuccess) {
+
+			include_once('includes/fn_authorise.php');
+			include_once('includes/fn_EncoderAllocationEntry_SQL.php');
+			$menuFile = '';
+			$contentFile = '';
+			$contentMsg = '';
+			
+		
+			$loginAuthorised = ($_COOKIE["loginAuthorised"] == "loginAuthorised");
+			
+			if ($loginAuthorised)
+			 {
+						$accessLevel = $_COOKIE["accessLevel"];
+						$userID = $_COOKIE["userID"];
+						$status = $_GET['status'];
+						if (isset($status) AND ($status == "logout"))
+						{
+							if(insertLogout())
+							{							
+								setcookie("loginAuthorised", "", time()-7200,"/");	
+								header("Location: index.php");
+							}
+						}	else
+						 {
+						 			$settingsFile='includes/settings.php';
+									$menuFile = 'includes/encoderMenu.php';
+									$contentCode = $_GET['content'];
+									switch ($contentCode)
+									 {
+								    			case "availableEncoders":									    								    							    	
+								    			$contentFile = "includes/encodersList.php";
+								        		break;
+								   			
+								   				case "listSelectedAllocation":
+								   				$contentFile = "includes/listSelectedAllocation.php";
+								        		break;
+								   				
+								   				case "selectEncoder":				     
+												$contentFile = "includes/listSelectedEncoder.php";
+								        		break;
+								        		
+								        		case "allocationInsert":				     
+												$contentFile = "includes/allocationInsert.php";
+								        		break;
+								        		
+								   				case "encoderAllocation":
+								       		$contentFile = "includes/encoderAllocationMatrix.php";
+								        		break;
+								        		
+								        		case "addEditEncoderAllocation":
+								        		$contentMsg = $contentCode;
+								        		break;
+								        		
+								        		case "listUsers":
+								        		$contentFile = "includes/listUsers.php";
+								        		break;	
+								        		
+								        		case "createUser":
+								        		$contentFile = "includes/userCreate.php";
+								        		break;	
+								        		
+								   				case"accessLog":
+								        		$contentFile = "includes/accessLog.php";
+								        		break;			
+								        		
+								        		case"changePassword":
+								        		$contentFile = "includes/changePassword.php";
+								        		break;					    							        								        								   
+									}	
+							}
+					}
+					else
+				 	{
+										$username = $_POST['username'];										
+										$password = $_POST['password'];
+										if (userAuthorised($username, $password)) {
+											header("Location: index.php");
+										} else {				
+											$contentFile = 'includes/loginForm.php';
+										}
+										$contentFile = 'includes/loginForm.php';
+					}
+	}
+	else
+	{
+			$contentMsg = 'No database connection.';
+	}		
+
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+	<!-- HTML Headers and Links to CSS -->
+	<title>Encoder Allocation Tool(EAT)</title>
+	<meta name="generator" content="Bluefish 2.2.6" >
+	<meta name="author" content="Govindraj" >
+	<meta name="date" content="2014-10-24T01:57:15+0530" >
+	<meta name="copyright" content="TMIT World Limited">
+	<meta name="keywords" content="Infinite Skills - php/MySQL Training">
+	<meta name="description" content="Infinite Skills - php/MySQL Training">
+	<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+	<link rel="stylesheet" href="css/encoder_layout.css" type="text/css" />
+	<link rel="stylesheet" href="css/encoder_style.css" type="text/css" />
+
+</head>
+<body>
+  <div id="outerWrapper">
+
+		    <div id="header">		       
+				<?php
+				if (file_exists($settingsFile)) {include_once($settingsFile);} 
+				else echo '<p>Encoder Allocation Tool(EAT)</p>';				
+				?>
+		    </div>  <!-- end header -->
+
+    		<div id="innerWrapper">
+    		<?php   
+    		if (file_exists($menuFile)) {
+      	echo '	<div id="menuColumn">
+					<p style="color: blue; font-weight: bolder;font-variant: small-caps"><u>Menu</u></p>			
+					      			<br />';
+					      			include($menuFile);
+					      			echo '</div>';     			    			     				
+      			}
+      			else {
+      				echo '	<div id="menuColumnLogin">
+					<p align=justify style="color: blue; font-weight: normal">This web app is in place to manage the usage of limited encoders available to publish the streams.
+					<br /><br />Please  				
+					 <a href="index.php">
+					 <span class="header"><u>Login</u></span>
+					 </a>to leverage the tool.
+					</p>			
+					      			<br /></div>';
+      			}
+      			?>
+		
+		      
+
+      		<div  id="contentColumn">
+        			      			<br />
+      			<?php       				
+      				if (file_exists($contentFile)) {include($contentFile);} 
+      				  	      			
+						if (!empty($contentMsg)) { echo $contentMsg; }
+
+      			?>
+  
+      		</div>  <!-- end contentColumn -->
+      		
+    		</div> <!-- end innerWrapper -->
+
+		    <div id="footer">
+		      		      <p>Copyright &copy; 2014 Akamai Technologies, inc.  All rights reserved.
+		    </p>
+	
+		    </div><!-- end footer -->
+    
+  </div><!-- end outerWrapper -->
+	<?php
+	
+		
+	?>
+
+
+</body>
+</html>

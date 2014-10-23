@@ -1,0 +1,64 @@
+<?php	
+
+								{	//		Create the personAdd form fields
+								$dateVal = gmdate("Y-m-d\TH:i",time());
+								
+								$fld_name = '<input type="text" name="name" placeholder="name" size="10" maxlength="20" required/>';
+								//$fld_email = '<input type="email" name="email"  placeholder="yourname@mail.com" size="10" maxlength="50"/>';
+								$fld_startDate = '<input type="datetime-local" name="startDate"  value="'.$dateVal.'" " size="10" maxlength="50" required/>';
+								$fld_endDate = '<input type="datetime-local" name="endDate"   size="10" maxlength="50" required/>';			
+								//		END: Create the personAdd form fields
+								}						
+
+								{	//	create the Salutation DROPDOWN  FIELD 
+										$salut_SQL =  "SELECT lookupValue FROM tLookup ";
+										$salut_SQL .= "WHERE lookupType = 'Salutation' ";
+										$salut_SQL .= "ORDER By lookupOrder ";
+										
+										$salut_SQL_Query = mysql_query($salut_SQL);	
+								
+										$fld_Salutation = '<select name="Salutation">';
+											//$fld_Salutation .= '<option selected="selected"></option>';
+								 	
+											while ($row = mysql_fetch_array($salut_SQL_Query, MYSQL_ASSOC)) {
+											    $salutValue = $row['lookupValue'];
+											    if ($current_Salutation == $salutValue) { 
+											    	$selectedFlag = " selected";
+											    } else { 
+											    	$selectedFlag = "";
+											    }
+											    $fld_Salutation .= '<option'.$selectedFlag.'>'.$salutValue.'</option>';
+											}
+								
+										$fld_Salutation .= '</select>';
+										
+									//	END: create the Salutation DROPDOWN  FIELD 
+	}	
+							echo '<form name="allocationInsert" action="index.php?content=allocationInsert" method="post">';
+								echo '<input type="hidden" name="encoderID" value="'.$encoderID.'" />';
+								
+								echo '<table>';		
+										/*echo '<tr>
+												<td colspan="5"></td>
+											</tr>	';	
+										echo '<tr>
+												<td colspan="5"><hr /></td>
+											</tr>	';	
+										echo '<tr>
+												<td colspan="5"></td>
+											</tr>	';	*/
+											echo ' <br /><br /><tr style="font-variant:small-caps">
+														<td>User</td>
+														<td>Start Date</td>
+														<td>Release Date</td>
+														</tr>';
+										echo '<tr>
+												<td>'.$fld_name.'</td>
+												<td>'.$fld_startDate.'</td>
+												<td>'.$fld_endDate.'</td>
+												<td>&nbsp;&nbsp;<input type="submit" value="Add" /></td>
+											</tr>	';	
+								echo '</table>';
+							echo '</form>';
+								
+?>							

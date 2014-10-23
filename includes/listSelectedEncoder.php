@@ -1,0 +1,232 @@
+<?php
+
+
+// $thisScriptName separated out as it's now used several times
+$thisScriptName = 'index.php?content=selectEncoder';
+//date_default_timezone_set('GMT');
+
+		
+		$encoderID = $_POST["encoderID"];
+		if(!isset($encoderID)) {$encoderID = $_GET["encoderID"]; }
+
+		if (isset($encoderID) AND $encoderID > 0){
+
+			{	//  Get the details of the company selected 
+										
+					$eEncoder_SQLselect = "SELECT * ";
+					$eEncoder_SQLselect .= "FROM ";
+					$eEncoder_SQLselect .= "eEncoder ";
+					$eEncoder_SQLselect .= "WHERE ID = '".$encoderID."' ";
+					
+					$eEncoder_SQLselect_Query = mysql_query($eEncoder_SQLselect);	
+					
+					while ($row = mysql_fetch_array($eEncoder_SQLselect_Query, MYSQL_ASSOC)) {
+						$ID = $row['ID'];
+						$encoderIP = long2ip($row['encoderIP']);
+						$encoderInfo = $row['encoderInfo'];
+						
+					//	$fullCoyName = trim($preName." ".$companyName." ".$RegType);
+														 
+					}					
+					mysql_free_result($eEncoder_SQLselect_Query);			
+			}
+			
+			{	//  Get the details of all associated Person records
+				//		and store in array:  allocationArray  with key >$indx
+				 
+					$indx = 0;
+				
+					$eEncoderAllocation_SQLselect = "SELECT a.ID, a.encoderID, b.username AS user, b.email, a.startDate, a.endDate
+																						FROM eEncoderAllocation a
+																						LEFT JOIN eUser b ON a.userID = b.ID
+																						WHERE a.encoderID = \"$encoderID\"";
+					
+					$eEncoderAllocation_SQLselect_Query = mysql_query($eEncoderAllocation_SQLselect);	
+					
+					while ($row = mysql_fetch_array($eEncoderAllocation_SQLselect_Query, MYSQL_ASSOC)) {
+						
+						//		we need this to pass to personEdit.php
+						$allocationArray[$indx]['ID'] = $row['ID'];
+						//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+						
+						$allocationArray[$indx]['user'] = $row['user'];
+						$allocationArray[$indx]['email'] = $row['email'];
+						$allocationArray[$indx]['startDate'] = $row['startDate'];
+						$allocationArray[$indx]['endDate'] = $row['endDate'];
+						
+							
+						$indx++;			 
+					}
+		
+					$numAllocations = sizeof($allocationArray);
+							
+					mysql_free_result($eEncoderAllocation_SQLselect_Query);			
+			}
+		
+			{	//		Output 
+
+					$tdOdd = 'style = "background-color: #FF8F8F;"';
+					$tdEven = 'style = "background-color: #76E9FF;"';
+					
+					echo '<div style=" font-family: arial, helvetica, sans-serif; ">';
+		
+							{	//		Table to render eEncoder detail	
+							echo 	  '<table>
+											<tr valign="top">								
+												<td style=" font-size: 24; 
+																font-weight: bold;" 
+																>
+														'.$encoderIP.'
+												</td>
+												
+												<td align="right" width="400">
+														'.$encoderInfo.'			
+												</td>
+											</tr>
+										</table>';
+							//		END: Table to render eEncoder detail
+							}
+															
+							echo '<div style="margin-left: 100; ">';
+				
+							{	//		Table of eEncoderAllocation records
+							echo '<table border="1" padding="5">';
+								echo '<tr  style="font-variant: small-caps">
+											
+											<td>User</td>
+											<td>Email</td>
+											<td>Start Date</td>
+											<td>Release Date</td>
+											<td>Action</td>
+										</tr>	';	
+									$accessLevel = $_COOKIE["accessLevel"];		
+									//checkAccess = "if (isset($accessLevel) AND $accessLevel >= 21) {"							
+								for ($indx = 0; $indx < $numAllocations; $indx++) {
+									$thisID = $allocationArray[$indx]['ID'];
+									$allocationEditLink = '<a href="allocationEditForm.php?personID='.$thisID.'">Edit</a>';
+									
+		        					if (($indx % 2) == 1) {$rowClass = $tdOdd; } else { $rowClass = $tdEven; }  
+		 
+									echo '<tr '.$rowClass.' height="20">
+									
+													
+												
+												<td>'.$allocationArray[$indx]['user'].'</td>
+		
+												<td>'.$allocationArray[$indx]['email'].'</td>
+		
+												<td>'.date('D M/d/Y H:i:s',$allocationArray[$indx]['startDate']).'</td>
+												
+												<td>'.date('D M/d/Y H:i:s',$allocationArray[$indx]['endDate']).'</td>';
+												if (isset($accessLevel) AND $accessLevel >= 21) {
+											echo '<td>'.$allocationEditLink.'&nbsp;</td>';
+									}
+												echo '</tr>	';		
+												//<td>'.$allocationEditLink.'</td>.
+												
+												     
+								}
+							echo '</table>';
+							//		END:  Table of eEncoderAllocation records
+							}	
+										
+										
+							//		update code:   coPeopleEdit 0807_12_include
+							if (isset($accessLevel) AND $accessLevel >= 21) {										
+							{	//		FORM to INSERT person		
+
+								{	//		Create the personAdd form fields
+								$dateVal = gmdate("Y-m-d\TH:i",time());
+								
+								$fld_name = '<input type="text" name="name" placeholder="name" size="10" maxlength="20" required/>';
+								//$fld_email = '<input type="email" name="email"  placeholder="yourname@mail.com" size="10" maxlength="50"/>';
+								$fld_startDate = '<input type="datetime-local" name="startDate"  value="'.$dateVal.'" " size="10" maxlength="50" required/>';
+								$fld_endDate = '<input type="datetime-local" name="endDate"   size="10" maxlength="50" required/>';			
+								//		END: Create the personAdd form fields
+								}						
+
+							echo '<form name="allocationInsert" action="index.php?content=allocationInsert" method="post">';
+								echo '<input type="hidden" name="encoderID" value="'.$encoderID.'" />';
+								
+								echo '<table>';		
+										/*echo '<tr>
+												<td colspan="5"></td>
+											</tr>	';	
+										echo '<tr>
+												<td colspan="5"><hr /></td>
+											</tr>	';	
+										echo '<tr>
+												<td colspan="5"></td>
+											</tr>	';	*/
+											echo ' <br /><br /><tr style="font-variant:small-caps">
+														<td>User</td>
+														<td>Start Date</td>
+														<td>Release Date</td>
+														</tr>';
+										echo '<tr>
+												<td>'.$fld_name.'</td>
+												<td>'.$fld_startDate.'</td>
+												<td>'.$fld_endDate.'</td>
+												<td>&nbsp;&nbsp;<input type="submit" value="Add" /></td>
+											</tr>	';	
+								echo '</table>';
+							echo '</form>';
+							//		END: FORM to INSERT person		
+							}
+														
+						}										
+							echo '</div>';		//		END:  <div style="margin-left: 100; ">
+							
+					echo '</div>';				//		END:	<div style=" font-family...">
+		
+			//		END: Output section 
+			}
+				
+		} else {
+
+			{	//	Select company from dropdowm
+				
+				$eEncoder_SQLselect = "SELECT  ";
+				$eEncoder_SQLselect .= "ID, encoderIP ";	
+				$eEncoder_SQLselect .= "FROM ";
+				$eEncoder_SQLselect .= "eEncoder ";
+				$eEncoder_SQLselect .= "Order By encoderIP ";
+					
+				$eEncoder_SQLselect_Query = mysql_query($eEncoder_SQLselect);	
+				
+				echo '<form action="'.$thisScriptName.'" method="post">';
+				
+				echo '<select name="encoderID">';
+				
+					echo '<option value="0"  selected="selected">..Select Encoder..</option>';
+			 	
+						while ($row = mysql_fetch_array($eEncoder_SQLselect_Query, MYSQL_ASSOC)) {
+						    $ID = $row['ID'];
+						    $encoderIP = long2ip($row['encoderIP']);						    						    
+						    
+						    echo '<option value="'.$ID.'">'.$encoderIP.'</option>';
+						}
+					
+						mysql_free_result($eEncoder_SQLselect_Query);		
+				
+						echo '</select>';
+				echo '&nbsp;&nbsp;&nbsp;&nbsp;';
+						echo '<input type="submit" />';
+						
+				echo '</form>';
+				//	END:  Select company from dropdowm
+			}
+			
+		}
+		
+//		END:	if ($dbSuccess)
+
+
+echo "<br /><hr /><br />";
+
+unset($encoderID);
+echo '<a href="'.$thisScriptName.'"><span class="header ">Select Another</span></a>';
+echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+echo '<a href="index.php"><span class="header ">Quit - to homepage</span></a>';
+
+?>
