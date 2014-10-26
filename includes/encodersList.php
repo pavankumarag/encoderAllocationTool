@@ -2,6 +2,45 @@
 
 
 $thisScriptName = 'index.php?content=availableEncoders';
+$thisPage = 'availableEncoders';
+
+$addEncoder = $_POST["addEncoder"];
+	if(!isset($addEncoder)) {$addEncoder = $_GET["addEncoder"]; }
+	
+	$deleteEncoder = $_POST["deleteEncoder"];
+	if(!isset($deleteEncoder)) {$deleteEncoder = $_GET["deleteEncoder"]; }
+	
+	
+	{	//		Insert New encoder Record
+			if(isset($addEncoder) AND $addEncoder == '1'){
+				
+				$encoderIP = $_POST["encoderIP"];	
+				$encoderInfo = $_POST["encoderInfo"];							
+				$insertMsg = insertEncoder($encoderIP,$encoderInfo);
+				if (!empty($insertMsg)) {
+					echo $insertMsg;
+				}
+				
+				unset($addEncoder);
+			}		
+		//		END:  Insert New Person Record		
+		}
+		
+		{	//		Delete New encoder Record
+			if(isset($deleteEncoder) AND $deleteEncoder == '1'){
+				
+				$encoderIP = $_POST["encoderIP"];	
+				$encoderInfo = $_POST["encoderInfo"];							
+				$insertMsg = insertEncoder($encoderIP,$encoderInfo);
+				if (!empty($insertMsg)) {
+					echo $insertMsg;
+				}
+				
+				unset($addEncoder);
+			}		
+		//		END:  Insert New Person Record		
+		}
+		
 
 //		Get the sortorder with GET but default to Name
 $orderClause = $_GET["orderClause"];	
@@ -70,10 +109,19 @@ $header_EncoderInfo = '<a href="'.$thisScriptName.'&orderClause=encoderInfo"><sp
 
 	echo '</table>';	
 	echo ' &nbsp;&nbsp;^ click ID to edit record';
+	
+	if (isset($accessLevel) AND $accessLevel >= 21)
+			 {										
+							include_once("includes/addEncoder.php");
+							
+							}
+																							
+	
+		}
 
 
 
-}	
+	
 
 
 

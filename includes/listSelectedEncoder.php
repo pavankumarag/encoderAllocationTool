@@ -4,11 +4,81 @@
 // $thisScriptName separated out as it's now used several times
 $thisScriptName = 'index.php?content=selectEncoder';
 //date_default_timezone_set('GMT');
+$thisPage = 'selectEncoder'; //used in delete link,
 
+		$parentName = 'selectEncoder'; //used in Add and Edit form		
 		
 		$encoderID = $_POST["encoderID"];
 		if(!isset($encoderID)) {$encoderID = $_GET["encoderID"]; }
+		
+		$allocationID = $_POST["allocationID"];
+		if(!isset($allocationID)) {$allocationID = $_GET["allocationID"]; }
+	
+		$newAllocation = $_POST["newAllocation"];
+		if(!isset($newAllocation)) {$newAllocation = $_GET["newAllocation"]; }
+	
+		$allocationEdit = $_POST["allocationEdit"];
+		if(!isset($allocationEdit)) {$allocationEdit = $_GET["allocationEdited"]; }
+		
+		$allocationDelete = $_POST["allocationDelete"];
+	if(!isset($allocationDelete)) {$allocationDelete = $_GET["allocationDelete"]; }
 
+
+		include_once('includes/timeZone.php');
+		echo '	<input type="hidden" name="encoderID" value="'.$encoderID.'"/>';
+		echo '<input type="hidden" name="content" value="'.$thisPage.'"/>';
+		echo '</form>';
+
+
+	{	//		Insert New Person Recor
+			if(isset($newAllocation) AND $newAllocation == '1'){
+				
+				$userID = $_POST["username"];	
+				$startDate = strtotime($_POST["startDate"]);	
+				$endDate = strtotime($_POST["endDate"]);									
+				$insertMsg = allocationInsert($encoderID, $userID, $startDate, $endDate);
+				if (!empty($insertMsg)) {
+					echo $insertMsg;
+				}
+				
+				unset($newAllocation);
+			}		
+		//		END:  Insert New Person Record		
+		}		
+		
+		{	//		UPDATE Person Record
+			if(isset($allocationEdit) AND $allocationEdit == '1'){
+
+				$userID = $_POST["username"];	
+				$startDate = strtotime($_POST["startDate"]);	
+				$endDate = strtotime($_POST["endDate"]);	
+				//$Tel = $_POST["Tel"];	
+			
+				$updateMsg = allocationUpdate($allocationID, $encoderID, $userID, $startDate, $endDate);
+				if (!empty($updateMsg)) {
+					echo $updateMsg;
+				}
+				
+				unset($allocationEdit);
+			}		
+		//		END:  update Person Record		
+		}
+		
+		
+{// DELETE allocation record
+	if(isset($allocationDelete) AND $allocationDelete == '1'){
+	
+	$deleteMsg = allocationDelete($allocationID);
+	
+	if (!empty($deleteMsg)) {
+					echo $deleteMsg;
+				}
+				
+				unset($allocationDelete);
+	}
+	}		
+		
+		
 		if (isset($encoderID) AND $encoderID > 0){
 
 			{	//  Get the details of the company selected 
@@ -59,6 +129,7 @@ $thisScriptName = 'index.php?content=selectEncoder';
 					}
 		
 					$numAllocations = sizeof($allocationArray);
+					echo '<p> There are '.$numAllocations.'&nbsp;entries for your request';
 							
 					mysql_free_result($eEncoderAllocation_SQLselect_Query);			
 			}
@@ -103,8 +174,11 @@ $thisScriptName = 'index.php?content=selectEncoder';
 									//checkAccess = "if (isset($accessLevel) AND $accessLevel >= 21) {"							
 								for ($indx = 0; $indx < $numAllocations; $indx++) {
 									$thisID = $allocationArray[$indx]['ID'];
-									$allocationEditLink = '<a href="allocationEditForm.php?personID='.$thisID.'">Edit</a>';
-									
+									$allocationEditLink = '<a href="index.php
+									?content=allocationEditForm&allocationID='.$thisID.'&parentName='.$parentName.'"><u>Edit</u></a>';
+									$allocationDeleteLink = '<a href="index.php
+									?content='.$thisPage.'&allocationID='.$thisID.'&allocationDelete=1&encoderID='.$encoderID.'"><u>Delete</u></a>';
+					
 		        					if (($indx % 2) == 1) {$rowClass = $tdOdd; } else { $rowClass = $tdEven; }  
 		 
 									echo '<tr '.$rowClass.' height="20">
@@ -119,7 +193,7 @@ $thisScriptName = 'index.php?content=selectEncoder';
 												
 												<td>'.date('D M/d/Y H:i:s',$allocationArray[$indx]['endDate']).'</td>';
 												if (isset($accessLevel) AND $accessLevel >= 21) {
-											echo '<td>'.$allocationEditLink.'&nbsp;</td>';
+											echo '<td>'.$allocationEditLink.'&nbsp;&nbsp;&nbsp;&nbsp;'.$allocationDeleteLink.'</td>';
 									}
 												echo '</tr>	';		
 												//<td>'.$allocationEditLink.'</td>.
@@ -135,42 +209,7 @@ $thisScriptName = 'index.php?content=selectEncoder';
 							if (isset($accessLevel) AND $accessLevel >= 21) {										
 							{	//		FORM to INSERT person		
 
-								{	//		Create the personAdd form fields
-								$dateVal = gmdate("Y-m-d\TH:i",time());
-								
-								$fld_name = '<input type="text" name="name" placeholder="name" size="10" maxlength="20" required/>';
-								//$fld_email = '<input type="email" name="email"  placeholder="yourname@mail.com" size="10" maxlength="50"/>';
-								$fld_startDate = '<input type="datetime-local" name="startDate"  value="'.$dateVal.'" " size="10" maxlength="50" required/>';
-								$fld_endDate = '<input type="datetime-local" name="endDate"   size="10" maxlength="50" required/>';			
-								//		END: Create the personAdd form fields
-								}						
-
-							echo '<form name="allocationInsert" action="index.php?content=allocationInsert" method="post">';
-								echo '<input type="hidden" name="encoderID" value="'.$encoderID.'" />';
-								
-								echo '<table>';		
-										/*echo '<tr>
-												<td colspan="5"></td>
-											</tr>	';	
-										echo '<tr>
-												<td colspan="5"><hr /></td>
-											</tr>	';	
-										echo '<tr>
-												<td colspan="5"></td>
-											</tr>	';	*/
-											echo ' <br /><br /><tr style="font-variant:small-caps">
-														<td>User</td>
-														<td>Start Date</td>
-														<td>Release Date</td>
-														</tr>';
-										echo '<tr>
-												<td>'.$fld_name.'</td>
-												<td>'.$fld_startDate.'</td>
-												<td>'.$fld_endDate.'</td>
-												<td>&nbsp;&nbsp;<input type="submit" value="Add" /></td>
-											</tr>	';	
-								echo '</table>';
-							echo '</form>';
+								include_once("includes/allocationAddForm.php");
 							//		END: FORM to INSERT person		
 							}
 														

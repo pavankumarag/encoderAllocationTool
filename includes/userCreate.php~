@@ -100,7 +100,7 @@
 						</tr>
 						<tr>
 							<td>eMail</td>
-							<td><input type="text" name="eMail" /></td>
+							<td><input type="email" name="eMail" /></td>
 						</tr>
 						<tr>
 							<td>access level</td>

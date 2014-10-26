@@ -13,10 +13,17 @@
 				} 	
 			}
 	}
-date_default_timezone_set('GMT');
+
+echo $timeZone;
+$timeZone = $_POST['timeZone'];
+if(!isset($timeZone)) {$timeZone = $_GET['timeZone']; }
+if(!isset($timeZone)) {$timeZone = 'GMT'; }
+date_default_timezone_set($timeZone);
+
 	if ($dbSuccess) {
 
 			include_once('includes/fn_authorise.php');
+			include_once('includes/fn_EncoderAllocationEntry_SQL.php');
 			$menuFile = '';
 			$contentFile = '';
 			$contentMsg = '';
@@ -41,6 +48,7 @@ date_default_timezone_set('GMT');
 						 			$settingsFile='includes/settings.php';
 									$menuFile = 'includes/encoderMenu.php';
 									$contentCode = $_GET['content'];
+									if(!isset($contentCode)) { $contentCode = $_POST['content']; }
 									switch ($contentCode)
 									 {
 								    			case "availableEncoders":									    								    							    	
@@ -49,6 +57,10 @@ date_default_timezone_set('GMT');
 								   			
 								   				case "listSelectedAllocation":
 								   				$contentFile = "includes/listSelectedAllocation.php";
+								        		break;
+								        		
+								        		case "allocationEditForm":
+								   				$contentFile = "includes/allocationEditForm.php";
 								        		break;
 								   				
 								   				case "selectEncoder":				     
@@ -112,10 +124,10 @@ date_default_timezone_set('GMT');
 	<title>Encoder Allocation Tool(EAT)</title>
 	<meta name="generator" content="Bluefish 2.2.6" >
 	<meta name="author" content="Govindraj" >
-	<meta name="date" content="2014-10-23T17:59:57+0530" >
-	<meta name="copyright" content="TMIT World Limited">
-	<meta name="keywords" content="Infinite Skills - php/MySQL Training">
-	<meta name="description" content="Infinite Skills - php/MySQL Training">
+	<meta name="date" content="2014-10-25T18:55:42+0530" >
+	<meta name="copyright" content="Akamai Technologies, inc.">
+	<meta name="keywords" content="EAT">
+	<meta name="description" content="EncoderAllocationTool">
 	<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 	<link rel="stylesheet" href="css/encoder_layout.css" type="text/css" />
 	<link rel="stylesheet" href="css/encoder_style.css" type="text/css" />

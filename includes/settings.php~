@@ -1,8 +1,13 @@
 <?php
 				
-				echo '<p align=left>Welcome';								
-				echo '!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				
+				$userID = $_COOKIE["userID"];
+				$Get_username_SQL = "SELECT username from eUser WHERE ID = \"$userID\"";
+				$Get_username_SQL_Query = mysql_query($Get_username_SQL);
+				$result = mysql_fetch_assoc($Get_username_SQL_Query);
+				$userName = $result['username'];
+				echo '<p align=left id="settings">Welcome&nbsp;'.$userName;							
+				echo ' !&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				
 				Encoder Allocation Tool(EAT)';
 				echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 				echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -14,7 +19,7 @@
 				echo '&nbsp;&nbsp;&nbsp;';
 				echo '<button type=submit>
  							<a href="index.php?content=changePassword ">
-							<span class="settings"><u>Change Password</u></span>
+							<span class="settings">Change Password</span>
 							</a></button>';						
 				echo '</p>';
 				

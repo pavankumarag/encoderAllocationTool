@@ -14,6 +14,12 @@
 			
 	//   END: Style declarations	
 	}
+		$thisPage = "encoderAllocation";
+		include_once('includes/timeZone.php');
+		echo '	<input type="hidden" name="encoderID" value="'.$encoderID.'"/>';
+		echo '<input type="hidden" name="content" value="'.$thisPage.'"/>';
+		echo '</form>';
+			
 	
 	echo '<h1>All Allocations by Encoder</h1>';
 	
@@ -63,7 +69,7 @@
 													//echo '<div '.$indent100.'>';
 											   	echo "<table border='1'>";
 													echo "<tr>";																											
-														echo "<td>ID</td>";
+														//echo "<td>ID</td>";
 														echo "<td>user</td>";
 														echo "<td>email</td>";
 														echo '<td>Start Date</td>';
@@ -73,7 +79,7 @@
 								  					$currentEncoderID = $encoderID;
 											if (($indx % 2) == 1) {$rowClass = $trOdd; } else { $rowClass = $trEven; }
 											echo '<tr '.$rowClass.'>';								 														
-												echo "<td>".$allocationID."&nbsp;</td>";       //  this is NOT  eEncoderAllocation.ID
+												//echo "<td>".$allocationID."&nbsp;</td>";       //  this is NOT  eEncoderAllocation.ID
 												echo "<td>".$user."&nbsp;</td>";
 												echo "<td>".$email."&nbsp;</td>";
 												echo "<td>".$startDate."&nbsp;</td>";

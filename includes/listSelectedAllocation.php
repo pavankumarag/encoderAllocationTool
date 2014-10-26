@@ -1,9 +1,12 @@
 <?php
 		
 
-		{
+		
 	$thisScriptName = 'index.php?content=listSelectedAllocation&encoderID='.$encoderID;
 	//include_once('includes/fn_EncoderAllocationEntry_SQL.php');
+	
+	$parentName = 'listSelectedAllocation'; //used in Add and Edit form
+	$thisPage = 'listSelectedAllocation'; //used in delete link,
 	
 	$encoderID = $_POST["encoderID"];
 	if(!isset($encoderID)) {$encoderID = $_GET["encoderID"]; }
@@ -12,10 +15,21 @@
 	if(!isset($allocationID)) {$allocationID = $_GET["allocationID"]; }
 	
 	$newAllocation = $_POST["newAllocation"];
-	if(!isset($allocationInserted)) {$allocationInserted = $_GET["allocationInserted"]; }
+	if(!isset($newAllocation)) {$newAllocation = $_GET["newAllocation"]; }
 	
-	$allocationEdited = $_POST["allocationEdited"];
-	if(!isset($allocationEdited)) {$allocationEdited = $_GET["allocationEdited"]; }
+	$allocationEdit = $_POST["allocationEdit"];
+	if(!isset($allocationEdit)) {$allocationEdit = $_GET["allocationEdited"]; }
+	
+	$allocationDelete = $_POST["allocationDelete"];
+	if(!isset($allocationDelete)) {$allocationDelete = $_GET["allocationDelete"]; }
+
+//echo '<div> ';
+		include_once('includes/timeZone.php');
+		echo '	<input type="hidden" name="encoderID" value="'.$encoderID.'"/>';
+		echo '<input type="hidden" name="content" value="'.$thisPage.'"/>';
+		echo '</form>';
+			
+
 
 
 		{	//		Insert New Person Recor
@@ -23,7 +37,7 @@
 				
 				$userID = $_POST["username"];	
 				$startDate = strtotime($_POST["startDate"]);	
-				$endDate = strtotime($_POST["endDate"]);									
+				$endDate = strtotime($_POST["endDate"]);						
 				$insertMsg = allocationInsert($encoderID, $userID, $startDate, $endDate);
 				if (!empty($insertMsg)) {
 					echo $insertMsg;
@@ -34,31 +48,40 @@
 		//		END:  Insert New Person Record		
 		}
 		
-/*
-		{	//		UPDATE Person Record
-			if(isset($personEdited) AND $personEdited == '1'){
 
-				$Salutation = $_POST["Salutation"];	
-				$FirstName = $_POST["FirstName"];	
-				$LastName = $_POST["LastName"];	
-				$Tel = $_POST["Tel"];	
-				$eMail = $_POST["eMail"];	
-				$companyID = $_POST["companyID"];	
-				
-				$updateMsg = personUpdate($personID, $Salutation, $FirstName, $LastName, $Tel, $eMail, $companyID);
+		{	//		UPDATE Person Record
+			if(isset($allocationEdit) AND $allocationEdit == '1'){
+
+				$userID = $_POST["username"];	
+				$startDate = strtotime($_POST["startDate"]);	
+				$endDate = strtotime($_POST["endDate"]);	
+				//$Tel = $_POST["Tel"];	
+			
+				$updateMsg = allocationUpdate($allocationID, $encoderID, $userID, $startDate, $endDate);
 				if (!empty($updateMsg)) {
 					echo $updateMsg;
 				}
 				
-				unset($personEdited);
+				unset($allocationEdit);
 			}		
 		//		END:  Insert New Person Record		
-		}*/
+		}
 
+	{// DELETE allocation record
+	if(isset($allocationDelete) AND $allocationDelete == '1'){
+		
+	$deleteMsg = allocationDelete($allocationID);
+	
+	if (!empty($deleteMsg)) {
+					echo $deleteMsg;
+				}
+				
+				unset($allocationDelete);
+	}
 	}
 
 		{	//  Get the details of the company selected 
-									
+								
 				$eEncoder_SQLselect = "SELECT * ";
 				$eEncoder_SQLselect .= "FROM ";
 				$eEncoder_SQLselect .= "eEncoder ";
@@ -70,7 +93,9 @@
 					$ID = $row['ID'];
 					$encoderIP = long2ip($row['encoderIP']);
 					$encoderInfo = $row['encoderInfo'];						 
-				}					
+				}		
+				
+				
 		}
 		
 		{	//  Get the details of all associated Person records
@@ -145,7 +170,10 @@
 				//	$personEditLink = '<a href="personEditForm.php?personID='.$thisID.'">Edit</a>';
 					$personEditLink = '<a href="index.php
 					?content=allocationEditForm
-					&allocationID='.$thisAllocationID.'"><u>Edit</u></a>';
+					&allocationID='.$thisAllocationID.'&parentName='.$parentName.'&timeZone='.$timeZone.'"><u>Edit</u></a>';
+					
+					$allocationDeleteLink = '<a href="index.php
+					?content='.$thisPage.'&allocationID='.$thisAllocationID.'&allocationDelete=1&encoderID='.$encoderID.'"><u>Delete</u></a>';
 					
   					if (($indx % 2) == 1) {$rowClass = $tdOdd; } else { $rowClass = $tdEven; }  
  
@@ -163,7 +191,7 @@
 								
 
 					if (isset($accessLevel) AND $accessLevel >= 21) {
-							echo '<td>'.$personEditLink.'&nbsp;</td>';
+							echo '<td>'.$personEditLink.'&nbsp;&nbsp;&nbsp;'.$allocationDeleteLink.'</td>';
 					}
 					echo '</tr>	';	
   
