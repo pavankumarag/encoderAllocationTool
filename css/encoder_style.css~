@@ -69,10 +69,11 @@ a:hover .tableHeader {
 }
 
 .tableHeader1 {
-	background-color: lightgreen ;
+	background-color: lightskyblue;
 	color: blue;
 	font-weight: bolder;	
 	font-variant: small-caps;
+	font-size: 16px;
 }
 	
 .pad60 {
@@ -126,11 +127,18 @@ a:hover .settings {
 	
 }
 
-p .settings {
+#settings {
 	/*background-color: #000000;	*/
 	/*color: blueviolet;	*/
 	color: blue;
 	font-weight: bolder;
 	font-variant: small-caps;
 /*	border-bottom:1px solid;	*/
+}
+
+#headerForm {
+   display: inline-block;
+   color: blue;
+	font-weight: bolder;
+	font-variant: small-caps;
 }

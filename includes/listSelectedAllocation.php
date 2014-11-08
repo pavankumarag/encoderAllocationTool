@@ -18,10 +18,14 @@
 	if(!isset($newAllocation)) {$newAllocation = $_GET["newAllocation"]; }
 	
 	$allocationEdit = $_POST["allocationEdit"];
-	if(!isset($allocationEdit)) {$allocationEdit = $_GET["allocationEdited"]; }
+	if(!isset($allocationEdit)) {$allocationEdit = $_GET["allocationEdit"]; }
 	
 	$allocationDelete = $_POST["allocationDelete"];
 	if(!isset($allocationDelete)) {$allocationDelete = $_GET["allocationDelete"]; }
+	
+	/*$timeZone = $_POST["timeZone"];
+	if(!isset($timeZone)) {$timeZone = $_GET["timeZone"]; }*/
+	
 
 //echo '<div> ';
 		include_once('includes/timeZone.php');
@@ -32,7 +36,7 @@
 
 
 
-		{	//		Insert New Person Recor
+		{	//		Insert New Allocation Recor
 			if(isset($newAllocation) AND $newAllocation == '1'){
 				
 				$userID = $_POST["username"];	
@@ -41,8 +45,7 @@
 				$insertMsg = allocationInsert($encoderID, $userID, $startDate, $endDate);
 				if (!empty($insertMsg)) {
 					echo $insertMsg;
-				}
-				
+				}								
 				unset($newAllocation);
 			}		
 		//		END:  Insert New Person Record		
@@ -170,7 +173,7 @@
 				//	$personEditLink = '<a href="personEditForm.php?personID='.$thisID.'">Edit</a>';
 					$personEditLink = '<a href="index.php
 					?content=allocationEditForm
-					&allocationID='.$thisAllocationID.'&parentName='.$parentName.'&timeZone='.$timeZone.'"><u>Edit</u></a>';
+					&allocationID='.$thisAllocationID.'&parentName='.$parentName.'&timeZone='.date_default_timezone_get().'"><u>Edit</u></a>';
 					
 					$allocationDeleteLink = '<a href="index.php
 					?content='.$thisPage.'&allocationID='.$thisAllocationID.'&allocationDelete=1&encoderID='.$encoderID.'"><u>Delete</u></a>';

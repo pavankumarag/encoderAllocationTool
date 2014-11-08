@@ -97,4 +97,33 @@
 		return $success;	
 		
 	}
+	
+	
+	function deleteUser($userID) {
+      $eUser_SQLdelete = "DELETE FROM eUser WHERE ID = \"$userID\"";	
+      if (mysql_query($eUser_SQLdelete))  
+		{	      
+		    $errorMsg = "";
+		 }
+		 else {
+		 $errorMsg = '<p style="color:red;font-weight:bolder">FAILED to DELETE User.</p>'.mysql_error();
+		 }
+      return $errorMsg;
+	}
+
+
+function editUser($userID) {
+      $eUser_SQLupdate  = "UPDATE eEncoder SET encoderIP =\"$encoderIP\",encoderInfo = \"$encoderInfo\" WHERE ID = \"$encoderID\" ";		
+      if (mysql_query($eUser_SQLupdate))  
+		{	      
+		    $errorMsg = "";
+		 }
+		 else {
+		 $errorMsg = '<p style="color:red;font-weight:bolder">FAILED to EDIT User.</p>'.mysql_error();
+		 }
+      return $errorMsg;
+	}
+	
+	
+	
 ?>

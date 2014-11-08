@@ -6,8 +6,8 @@
 								
 								$fld_name = '<input type="text" name="name" placeholder="name" size="10" maxlength="20" required/>';
 								//$fld_email = '<input type="email" name="email"  placeholder="yourname@mail.com" size="10" maxlength="50"/>';
-								$fld_startDate = '<input type="datetime-local" name="startDate"  value="'.$dateVal.'" " size="10" maxlength="50" required/>';
-								$fld_endDate = '<input type="datetime-local" name="endDate"   size="10" maxlength="50" required/>';			
+								$fld_startDate = '<input type="datetime-local" name="startDate"  value="'.$dateVal.'" " size="20" maxlength="50" required/>';
+								$fld_endDate = '<input type="datetime-local" name="endDate"   size="20" maxlength="50" required/>';			
 								//		END: Create the personAdd form fields
 								}						
 

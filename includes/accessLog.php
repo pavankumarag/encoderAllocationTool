@@ -2,7 +2,7 @@
 
 $thisScriptName = "index.php?content=accessLog";
 date_default_timezone_set('GMT');
-$accessLog_SQL = " select * from eAccessLog ORDER BY userName";
+$accessLog_SQL = " select * from eAccessLog ORDER BY timeLogin DESC ";
 $accessLog_SQL_Query = mysql_query($accessLog_SQL);
 $num_of_rows = mysql_num_rows($accessLog_SQL_Query);
 echo " There are $num_of_rows results for your request <br /><br />";

@@ -1,7 +1,53 @@
 <?php
 
 $thisScriptName = "index.php?content=listUsers";
-$user_SQL = "Select eUser.username as user,eUser.email, eAccessControl.userType FROM eUser LEFT JOIN eAccessControl ";
+$thisPage = "listUsers";
+
+$userDelete = $_POST["userDelete"];
+	if(!isset($userDelete)) {$userDelete = $_GET["userDelete"]; }
+	
+$userEdit = $_POST["userEdit"];
+	if(!isset($userEdit)) {$userEdit = $_GET["userEdit"]; }
+	
+	
+$userID = $_POST["userID"];
+	if(!isset($userID)) {$userID = $_GET["userID"]; }
+
+{// DELETE user 
+            	if(isset($userDelete) AND $userDelete == '1'){
+            		
+            		
+            	$deleteMsg = deleteUser($userID);
+            	
+            	if (!empty($deleteMsg)) {
+            					echo $deleteMsg;
+            				}
+            				
+            				unset($userDelete);
+            	}
+	}
+
+
+{// Edit user 
+            	if(isset($userEdit) AND $userEdit == '1'){
+            		
+            		$userName = $_POST["userName"];	
+            		$email = $_POST["email"];
+            		$accessLevel = $_POST["accessLevel"];
+            		
+            	//$editMsg = editUser($userID);
+            	
+            	if (!empty($editMsg)) {
+            					echo $editMsg;
+            				}
+            				
+            				unset($userEdit);
+            	}
+	}
+	
+	
+
+$user_SQL = "Select eUser.ID, eUser.username as user,eUser.email, eAccessControl.userType FROM eUser LEFT JOIN eAccessControl ";
 $user_SQL .= "ON eUser.accessLevel = eAccessControl.accessLevel ORDER BY user ";
 $user_SQL_Query = mysql_query($user_SQL);
 $num_of_rows = mysql_num_rows($user_SQL_Query);
@@ -11,17 +57,26 @@ echo '<table  border="1" padding="5">';
 				echo '<tr class="tableHeader1">
 							<td>User Name</td>
 							<td>Email</td>
-							<td>Role</td>';
+							<td>Role</td>
+							<td>Action</td>';
 				while( $row = mysql_fetch_array($user_SQL_Query, MYSQL_ASSOC))
 				{
+                  $userEditLink = '<a href="index.php
+					?content=editUserForm
+					&userID='.$row['ID'].'&parentName='.$thisPage.'"><u>Edit</u></a>';
+					
+                  $userDeleteLink = '<a href="index.php
+					?content='.$thisPage.'&userID='.$row['ID'].'&userDelete=1 "><u>Delete</u></a>';
+                  					
 						echo '<tr >
 									<td>'.$row['user'].'</td>
 									<td>'.$row['email'].'</td>
 									<td>'.$row['userType'].'</td>
+									<td>'.$userEditLink.'&nbsp;'.$userDeleteLink.'</td>
 									</tr>';					
 				}
 				echo '</table>';					
-echo '<br /><hr align=left style="width:350px"/><br />';
+echo '<br /><hr align=left style="width:350px"/>';
 echo '<a href="index.php?content=createUser"><span class="header ">Add User</span></a>';
 echo '&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.php"><span class="header ">Back to Main Page</span></a>';						
 							

@@ -28,6 +28,7 @@
 								}	
 							echo '<form name="allocationInsert" action="index.php?content='.$parentName.'" method="post">';
 							echo '<input type="hidden" name="newAllocation" value="1" />';
+							echo '<input type="hidden" name="timeZone" value="'.date_default_timezone_get().'"/>';
 								echo '<input type="hidden" name="encoderID" value="'.$encoderID.'" />';
 								
 								echo '<table>';										

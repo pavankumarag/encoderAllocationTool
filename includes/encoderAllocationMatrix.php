@@ -3,8 +3,8 @@
 
 //$thisScriptName = 'index.php?content=encoderAllocation';
 {  //   Style declarations
-			$trOdd = 'style = "background-color: #BFFFCF;"';
-			$trEven = 'style = "background-color: #FCCDFF;"';
+			$trOdd = 'style = "background-color: #BFFFCF;margin-left:50;"';
+			$trEven = 'style = "background-color: #FCCDFF;margin-left:50;"';
 			
 			$textFont = 'style = " font-family: arial, helvetica, sans-serif; "';
 			$textRed = 'style = " font-family: arial, helvetica, sans-serif; color:maroon; "';
@@ -68,7 +68,7 @@
 											   	echo '<h2 '.$indent50.'>'.$encoderFullInfo.'</h2>';											   	
 													//echo '<div '.$indent100.'>';
 											   	echo "<table border='1'>";
-													echo "<tr>";																											
+													echo '<tr class="tableHeader1">';																											
 														//echo "<td>ID</td>";
 														echo "<td>user</td>";
 														echo "<td>email</td>";
@@ -78,7 +78,8 @@
 											   } 
 								  					$currentEncoderID = $encoderID;
 											if (($indx % 2) == 1) {$rowClass = $trOdd; } else { $rowClass = $trEven; }
-											echo '<tr '.$rowClass.'>';								 														
+											//echo '<tr '.$rowClass.'>';						
+											echo '<tr style="margin-left:50">';		 														
 												//echo "<td>".$allocationID."&nbsp;</td>";       //  this is NOT  eEncoderAllocation.ID
 												echo "<td>".$user."&nbsp;</td>";
 												echo "<td>".$email."&nbsp;</td>";

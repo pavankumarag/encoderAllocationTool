@@ -19,6 +19,12 @@ echo '<a href="index.php?content=availableEncoders">
 				<span class="header ">Add/Edit Encoder Allocation</span>
 </a>
 <br /><br />
+
+<a href="index.php?content=reportIssue">
+				<span class="header ">Report An Issue</span>
+</a>
+<br /><br />
+
 <!-- <img src="images/akamai_logo.jpg" alt="Akamai" style="width:10%;height:10%	"/> -->
 ';
 

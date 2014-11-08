@@ -15,13 +15,13 @@
 
 		{	//		Get the details of the person selected 
 			$allocationID = $_GET["allocationID"];	
-			$timeZone = $_GET["timeZone"];
+			//$timeZoneSet = $_GET["timeZoneSet"];
 			$parentName = $_POST["parentName"];
 	if(!isset($parentName)) {$parentName = $_GET["parentName"]; }			
 //echo $timeZone;		
 
-date_default_timezone_set($timezone);
-	echo 'The current time zone set is<u> '.date_default_timezone_get().'</u>';		
+//date_default_timezone_set($timezone);
+	echo 'The current time zone set is<u> '.date_default_timezone_get().'</u><br />';		
 	
 					
 			$eAllocation_SQLselect = "SELECT * ";
@@ -100,6 +100,7 @@ date_default_timezone_set($timezone);
 		{	//	render the FORM 
 				echo '<br />';
 			echo '<form name="postAllocation" action="index.php?content='.$parentName.'" method="post">';
+			echo '<input type="hidden" name="timeZone" value="'.date_default_timezone_get().'" />';
 			echo $fld_allocationEdit;
 		
 				echo $fld_allocationID;
@@ -130,6 +131,7 @@ date_default_timezone_set($timezone);
 				';
 					
 			echo '</form>';
+			echo date_default_timezone_get();
 		//		END: render the FORM 
 		}
 

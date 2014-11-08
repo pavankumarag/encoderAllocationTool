@@ -28,7 +28,7 @@ echo '<br /><br /><hr align=left style="width:250px" />
 <p style="color: blue; font-weight: bolder;font-variant: small-caps"><u>Admin Panel</u></p>
 <br />
 
-<a href="index.php?content=ListUsers">
+<a href="index.php?content=listUsers">
 				<span class="header ">List Users</span>
 </a>
 <br /><br />

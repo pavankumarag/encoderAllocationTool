@@ -14,15 +14,16 @@
 			}
 	}
 
-
-$timeZone = $_POST['timeZone'];
-if(!isset($timeZone)) {$timeZone = $_GET['timeZone']; }
-if(!isset($timeZone)) {$timeZone = 'GMT'; }
-date_default_timezone_set($timeZone);
+//echo $_POST['timeZone'];
+$timeZoneSet = $_POST['timeZone'];
+if(!isset($timeZoneSet)) {$timeZoneSet = $_GET['timeZone']; }
+if(!isset($timeZoneSet)) {$timeZoneSet = 'GMT'; }
+date_default_timezone_set($timeZoneSet);
 
 	if ($dbSuccess) {
 
 			include_once('includes/fn_authorise.php');
+			include_once('mailing/mailConfig.php');
 			include_once('includes/fn_EncoderAllocationEntry_SQL.php');
 			$menuFile = '';
 			$contentFile = '';
@@ -36,6 +37,7 @@ date_default_timezone_set($timeZone);
 						$accessLevel = $_COOKIE["accessLevel"];
 						$userID = $_COOKIE["userID"];
 						$status = $_GET['status'];
+						if(!isset($status)) { $status = $_POST['status']; }
 						if (isset($status) AND ($status == "logout"))
 						{
 							if(insertLogout())
@@ -45,7 +47,7 @@ date_default_timezone_set($timeZone);
 							}
 						}	else
 						 {
-						 			$settingsFile='includes/settings.php';
+						 			$settingsFile='includes/settings1.php';
 									$menuFile = 'includes/encoderMenu.php';
 									$contentCode = $_GET['content'];
 									if(!isset($contentCode)) { $contentCode = $_POST['content']; }
@@ -54,6 +56,10 @@ date_default_timezone_set($timeZone);
 								    			case "availableEncoders":									    								    							    	
 								    			$contentFile = "includes/encodersList.php";
 								        		break;
+								        		
+								        		case "editEncoderForm":									    								    							    	
+								    			$contentFile = "includes/editEncoderForm.php";
+								        		break;								        	
 								   			
 								   				case "listSelectedAllocation":
 								   				$contentFile = "includes/listSelectedAllocation.php";
@@ -79,6 +85,10 @@ date_default_timezone_set($timeZone);
 								        		$contentMsg = $contentCode;
 								        		break;
 								        		
+								        		case "reportIssue":
+								       		$contentFile = "includes/reportIssue.php";
+								        		break;
+								        		
 								        		case "listUsers":
 								        		$contentFile = "includes/listUsers.php";
 								        		break;	
@@ -86,6 +96,10 @@ date_default_timezone_set($timeZone);
 								        		case "createUser":
 								        		$contentFile = "includes/userCreate.php";
 								        		break;	
+
+                                     case "editUserForm":									    								    							    	
+								    			$contentFile = "includes/editUserForm.php";
+								        		break;								        		
 								        		
 								   				case"accessLog":
 								        		$contentFile = "includes/accessLog.php";
@@ -124,7 +138,7 @@ date_default_timezone_set($timeZone);
 	<title>Encoder Allocation Tool(EAT)</title>
 	<meta name="generator" content="Bluefish 2.2.6" >
 	<meta name="author" content="Govindraj" >
-	<meta name="date" content="2014-10-25T18:56:05+0530" >
+	<meta name="date" content="2014-11-07T09:17:38+0530" >
 	<meta name="copyright" content="Akamai Technologies, inc.">
 	<meta name="keywords" content="EAT">
 	<meta name="description" content="EncoderAllocationTool">
@@ -170,8 +184,9 @@ date_default_timezone_set($timeZone);
         			      			<br />
       			<?php       				
       				if (file_exists($contentFile)) {include($contentFile);} 
+      				else { include('includes/initialContent.php');}
       				  	      			
-						if (!empty($contentMsg)) { echo $contentMsg; }
+						//if (!empty($contentMsg)) { echo $contentMsg; }
 
       			?>
   

@@ -17,15 +17,17 @@ $fld_timezone = '<select name="timeZone">
 									<option value="0" selected="selected">Please, select timezone</option>';
 									
 									
-									
+									//date_default_timezone_set('GMT');
 foreach(timezone_identifiers_list() as $key => $zone) {  	
+	date_default_timezone_set($zone);
     $zone_time = 'UTC/GMT '. date('P', $timeStamp);
     $fld_timezone .= '<option value="'.$zone.'">'.$zone.'&nbsp;&nbsp;&nbsp;-'.$zone_time.'</option>';
   } 
   
+  date_default_timezone_set($timeZone);
  /* foreach( tz_list() as $t) {
  $fld_timezone .=  '<option value="'.$t['zone'].'">'.$t['zone'].' -&nbsp;&nbsp;'.$t['diff_from_GMT'].'</option>';
-  	}/*
+  	}*/
  // echo $fld_timezone;
   
   
